@@ -1,0 +1,69 @@
+<!-- templates/summary.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summary - {{ title }}</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 50px auto;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .summary-section {
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .summary-section h4 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .btn-secondary {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <h2>Summary for: "{{ title }}"</h2>
+
+    <div class="summary-section">
+        <h4>🧠 Summary:</h4>
+        <p>{{ groq_summary }}</p>
+    </div>
+
+    <div class="summary-section">
+        <h4>🔑 Top Keywords:</h4>
+        <ul>
+            {% for keyword in top_keywords %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{{ url_for('main') }}" class="btn-secondary">← Back to Articles</a>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ article.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/article.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ article.title }}</h1>
+        <p><strong>🔗 URL:</strong> <a href="{{ article.url }}" target="_blank">{{ article.url }}</a></p>
+        <p><strong>✍️ Author(s):</strong> {{ article.authors.strip("[]").replace("'", "").split(",") | map('trim') | join(', ') }}</p>
+
+        <p><strong>🏷️ Tags:</strong>
+            {% for tag in article.tags.strip("[]").replace("'", "").split(",") %}
+                <span class="tag-box">{{ tag.strip() }}</span>
+            {% endfor %}
+        </p>
+
+        <form action="{{ url_for('summarize_article', article_id=article_id) }}" method="get">
+            <button type="submit">📚 Summarize Article</button>
+        </form>
+
+        <p><strong>📊 Engagement Prediction:</strong> {{ predicted_engagement }}</p>
+
+        <hr>
+        <h3>💬 Content Optimization Assistant</h3>
+        <form id="feedbackForm">
+            <input type="hidden" name="author" value="{{ article.authors }}">
+            <input type="hidden" name="article_id" value="{{ article_id }}">
+            <input type="text" name="username" placeholder="Your Name" required>
+            <textarea name="feedback" placeholder="Suggest how to improve this article..." required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+        <div id="feedback-result"></div>
+
+        <h4>✍️ User Recommendations:</h4>
+        <ul>
+            {% for rec in recommendations %}
+            <li>
+                <b>{{ rec.username }}</b> ({{ rec.timestamp }})<br>
+                Suggestion: {{ rec.suggestion }}<br>
+                <button onclick="vote('{{ rec._id }}', 'up')">👍 {{ rec.votes.up }}</button>
+                <button onclick="vote('{{ rec._id }}', 'down')">👎 {{ rec.votes.down }}</button>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('main') }}">← Back to articles</a>
+
+        <hr>
+        <h3>📈 Author Influence Dashboard</h3>
+        <p><strong>Author:</strong> {{ author_dashboard.name }}</p>
+        <p><strong>Total Articles:</strong> {{ author_dashboard.total_articles }}</p>
+
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Predicted Engagement</th>
+            </tr>
+            {% for title, tags, engagement in zip(author_dashboard.titles, author_dashboard.tags, author_dashboard.engagements) %}
+            <tr>
+                <td>{{ title }}</td>
+                <td>{{ ", ".join(tags) }}</td>
+                <td>{{ engagement }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <canvas id="authorChart" width="600" height="300"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('authorChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ author_dashboard.titles|tojson }},
+                datasets: [{
+                    label: 'Predicted Engagement',
+                    data: {{ author_dashboard.engagements|tojson }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch("/submit_feedback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("feedback-result").innerText = result.suggestion || result.error;
+        });
+
+        async function vote(id, type) {
+            await fetch(`/vote_feedback/${id}/${type}`, { method: "POST" });
+            location.reload();
+        }
+    </script>
+</body>
+</html>

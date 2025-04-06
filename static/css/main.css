@@ -1,0 +1,132 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(145deg, #f9fafc, #e0f7fa);
+  color: #333;
+}
+
+.navbar {
+  background: #00acc1;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.navbar h2 {
+  margin: 0;
+}
+
+.logout-button {
+  background-color: #ffffff33;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #ffffff55;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #007c91;
+  margin-bottom: 2rem;
+}
+
+.search-section,
+.advanced-section,
+.recommend-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.search-section input,
+.advanced-section input,
+.advanced-section textarea {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  background: #00acc1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #00838f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.article-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.2rem;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.article-title {
+  color: #007c91;
+  margin-bottom: 0.5rem;
+}
+
+.article-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tags {
+  margin-top: 0.8rem;
+}
+
+.tag {
+  display: inline-block;
+  background: #e0f2f1;
+  color: #00796b;
+  padding: 5px 10px;
+  margin: 3px;
+  font-size: 0.9rem;
+  border-radius: 16px;
+}

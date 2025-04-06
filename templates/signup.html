@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup | Smart Read</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+  <script src="{{ url_for('static', filename='js/signup.js') }}" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="signup-wrapper">
+    <div class="signup-box">
+      <h2>Create Your Smart Read Account</h2>
+      <form method="POST">
+        <input type="text" name="name" placeholder="👤 Full Name" required />
+        <input type="email" name="email" placeholder="📧 Email Address" required />
+        <input type="password" name="password" placeholder="🔒 Password" required />
+        <button type="submit">🚀 Sign Up</button>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Smart Read</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-box">
+      <h2>Welcome Back to <span class="brand">Smart Read</span></h2>
+      <form method="POST">
+        <input type="email" name="email" placeholder="📧 Email Address" required />
+        <input type="password" name="password" placeholder="🔒 Password" required />
+        <button type="submit">🔓 Login</button>
+        <p>New here? <a href="/signup">Signup now</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

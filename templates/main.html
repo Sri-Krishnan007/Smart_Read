@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartReads - Explore Articles</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <h2>📚 SmartReads</h2>
+    </div>
+    <div class="navbar-right">
+      <span class="username">👋 Hi, {{ username }}</span>
+      <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">✨ Explore Insightful Articles</h1>
+
+    <!-- Search Section -->
+    <form method="GET" action="/search" class="search-section">
+      <input type="text" name="query" placeholder="🔍 Search by title or text..." required />
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Advanced Tag Prediction -->
+    <form method="POST" action="/advanced-search" class="advanced-section">
+      <h3>🧠 Advanced Tag Prediction</h3>
+      <input type="text" name="title" placeholder="📄 Enter article title" required />
+      <textarea name="text" placeholder="📝 Enter article content..." required></textarea>
+      <button type="submit">Find Tags</button>
+    </form>
+
+    <!-- Personalized Recommendations -->
+    <form method="POST" action="/recommend" class="recommend-section">
+      <button type="submit">🎯 Get Personalized Recommendations</button>
+    </form>
+
+    <!-- Articles -->
+    <div class="grid">
+      {% for article in articles %}
+      <div class="article-card">
+        <h2 class="article-title">
+          <a href="{{ url_for('article_detail', article_id=loop.index0) }}">{{ article.title }}</a>
+        </h2>
+        <p class="author">✍️ <strong>Author:</strong> {{ article.authors.strip("[]").replace("'", "").split(",") | map('trim') | join(', ') }}</p>
+        <div class="tags">
+          {% for tag in article.tags.strip("[]").replace("'", "").split(',') %}
+          <span class="tag">🏷️ {{ tag.strip() }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
